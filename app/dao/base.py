@@ -45,9 +45,6 @@ class BaseDAO:
         async with async_session_maker() as session:
             query = select(cls.model.__table__.columns)
             after_query = await session.execute(query)
-            try:
-                items = after_query.mappings().all()
-            except NoResultFound:
-                raise HTTPException(status_code=404, detail="Posts aren't found")
+            items = after_query.mappings().all()
             return items
         
